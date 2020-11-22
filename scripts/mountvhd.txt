@@ -1,0 +1,10 @@
+REM Mount VHD file - Diskpart script for updateinsider project on github
+REM Don't change the line "select vdisk..." and "assign..." if you want to use it with updateinsider script
+REM You can change it if you want to use it standalone
+REM By @raspiduino on github.com
+
+select vdisk file=
+attach vdisk
+select partition 1
+REM You can change the letter here if you want
+assign letter=
