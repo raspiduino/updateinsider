@@ -63,8 +63,11 @@ os.system("scripts\\tmp\\uup_download_windows.tmp.cmd") # This might take a whil
 open("scripts\\tmp\\mountvhd.tmp.txt", "w").write(open("scripts\\mountvhd.txt", "r").read().replace("file=", "file=" + vhd).replace("letter=", "letter=" + driveletter))
 os.system('diskpart /s scripts\\tmp\\mountvhd.tmp.txt')
 
+# Mount iso
+isodrivename = os.system('start powershell "exit [int][char](Mount-DiskImage -PassThru ' + [f for f in os.listdir('scripts\\tmp') if os.path.isfile(os.path.join('.', f)) and f.endswith('.iso')][0] + ' | Get-Volume).DriveLetter;"')
+
 # Extract the wim file
-os.system("scripts\\tmp\\bin\\wimlib-imagex apply scripts\\tmp\\ISOFOLDER\\sources\\install.wim " + driveletter + ":\\") # This might take a while too!
+os.system("scripts\\files\\wimlib-imagex apply " + chr(isodrivename) + ":\\sources\\install.wim " + driveletter + ":\\") # This might take a while too!
 
 # Set boot flag
 os.system("bcdboot /m " + guid + " " + driveletter + ":\\Windows")
