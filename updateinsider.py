@@ -64,7 +64,7 @@ open("scripts\\tmp\\mountvhd.tmp.txt", "w").write(open("scripts\\mountvhd.txt", 
 os.system('diskpart /s scripts\\tmp\\mountvhd.tmp.txt')
 
 # Mount iso
-isodrivename = os.system('start powershell "exit [int][char](Mount-DiskImage -PassThru ' + [f for f in os.listdir('scripts\\tmp') if os.path.isfile(os.path.join('.', f)) and f.endswith('.iso')][0] + ' | Get-Volume).DriveLetter;"')
+isodrivename = os.system('start /wait powershell "exit [int][char](Mount-DiskImage -PassThru ' + [f for f in os.listdir('scripts\\tmp') if os.path.isfile(os.path.join('.', f)) and f.endswith('.iso')][0] + ' | Get-Volume).DriveLetter;"')
 
 # Extract the wim file
 os.system("scripts\\files\\wimlib-imagex apply " + chr(isodrivename) + ":\\sources\\install.wim " + driveletter + ":\\") # This might take a while too!
