@@ -5,6 +5,9 @@ REM By @raspiduino on github.com
 
 select vdisk file=
 attach vdisk
-select partition 1
+clean
+create partition primary
+active
+format FS=NTFS label="Windows 10 Insider" quick
 REM You can change the letter here if you want
 assign letter=
