@@ -4,7 +4,7 @@ Useful for update native boot vhd/vhdx
 By @raspiduino on github
 Date created 19/11/2020
 '''
-# Many thanks uupdump.ml and beautifulsoup4
+# Many thanks uupdump.ml, beautifulsoup4, WinCDEmu, and other libs.
 
 import admin # https://github.com/raspiduino/pythonadmin
 import requests
@@ -36,8 +36,7 @@ driveletter = "V" # Select a drive letter to mount vhd file
 
 isodriveletter = "I" # Select a drive letter to mount iso file
 
-guid = "{38d73d16-2cb8-499d-b042-aa8ef8153d91}" # Choose some unique guid for your new boot entry. You can google for guid generator
-
+'''
 # Get the version id
 if ring == "wif":
 	# Get the file id
@@ -72,15 +71,11 @@ os.system("timeout /t 1 >nul")
 # Extract the wim file
 os.system("scripts\\files\\wimlib-imagex apply " + isodriveletter + ":\\sources\\install.wim " + driveletter + ":\\") # This might take a while too!
 
-# Set boot flag
-os.system("bcdboot /m " + guid + " " + driveletter + ":\\Windows")
-os.system("bcdedit /set " + guid + "description 'Windows 10 Insider'") # You can change this description if you want to
-
 '''
-If you want to set boot flag manually
-So comment out the 2 lines in 'set boot flag'
+You must set the boot flag for the vhd file
 Please open Command Prompt as Admin and execute:
 bcdboot V:\Windows
+Replace V with the mounted vhd letter
 
 If you want to change the name of the entry, please follow the instructions from
 https://devblogs.microsoft.com/cesardelatorre/booting-natively-windows-10-from-a-vhdx-drive-file/
@@ -95,6 +90,6 @@ os.system("rmdir /S /Q scripts\\tmp") # Comment out this line if you want to kee
 os.system("mkdir scripts\\tmp")
 
 print("It's all done!")
-print("You have installed Windows 10 " + edition + " " + lang + " (" + ring +" ring ) on " + driveletter + ":\\")
+print("You have installed Windows 10 " + edition + " " + lang + " (" + ring +" ring) on " + driveletter + ":\\")
 print("Reboot and see your new version!")
 os.system("pause")
