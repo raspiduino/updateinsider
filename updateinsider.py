@@ -34,6 +34,8 @@ vhd = "D:\\Data\\vm\\Windows10Insider.vhd" # Set the vhd file
 
 driveletter = "V" # Select a drive letter to mount vhd file
 
+isodriveletter = "I" # Select a drive letter to mount iso file
+
 guid = "{38d73d16-2cb8-499d-b042-aa8ef8153d91}" # Choose some unique guid for your new boot entry. You can google for guid generator
 
 # Get the version id
@@ -64,10 +66,11 @@ open("scripts\\tmp\\mountvhd.tmp.txt", "w").write(open("scripts\\mountvhd.txt", 
 os.system('diskpart /s scripts\\tmp\\mountvhd.tmp.txt')
 
 # Mount iso
-isodrivename = os.system('powershell "exit [int][char](Mount-DiskImage -PassThru "' + os.getcwd() + '\\scripts\\tmp\\' + [f for f in os.listdir('scripts\\tmp\\') if f.endswith('.ISO')][0] + '" | Get-Volume).DriveLetter;"')
+os.system("start scripts\\PortableWinCDEmu-4.0.exe scripts\\tmp\\" + [f for f in os.listdir('scripts\\tmp\\') if f.endswith('.ISO')][0] + " " + isodriveletter)
+os.system("timeout /t 1 >nul")
 
 # Extract the wim file
-os.system("scripts\\files\\wimlib-imagex apply " + chr(isodrivename) + ":\\sources\\install.wim " + driveletter + ":\\") # This might take a while too!
+os.system("scripts\\files\\wimlib-imagex apply " + isodriveletter + ":\\sources\\install.wim " + driveletter + ":\\") # This might take a while too!
 
 # Set boot flag
 os.system("bcdboot /m " + guid + " " + driveletter + ":\\Windows")
