@@ -4,39 +4,43 @@ Useful for update native boot vhd/vhdx
 By @raspiduino on github
 Date created 19/11/2020
 '''
-# Many thanks uupdump.ml, beautifulsoup4, WinCDEmu, and other libs.
+# Many thanks whatever127 (uupdump.ml), Leonard Richardson (beautifulsoup), sysprogs.com (WinCDEmu), and other libs.
 
-import admin # https://github.com/raspiduino/pythonadmin
 import requests
 from bs4 import BeautifulSoup
 import os
 
-if not admin.isUserAdmin():
-	admin.runAsAdmin("python updateinsider.py")
-	exit(1)
-
 # Settings
-arch = "amd64" # Change this to fit your arch (x86, amd64, arm64)
-'''
-Change this to fit your ring:
+arch = "" # Change this to fit your arch (x86, amd64, arm64)
+# Change this to fit your ring:
+rings = '''
 retail : Normal release
 rp     : Release preview
 wis    : Slow rings
 wif    : Fast rings (Default)
 '''
-ring = "wif"
+ring = ""
 
-lang = "en-us" # Pick a language
+lang = "" # Pick a language
 
-edition = "professional" # Choose an edition (core, coren, professional, professionaln)
+edition = "" # Choose an edition (core, coren, professional, professionaln)
 
-vhd = "D:\\Data\\vm\\Windows10Insider.vhd" # Set the vhd file
+vhd = "" # Set the vhd file
 
-driveletter = "V" # Select a drive letter to mount vhd file
+driveletter = "" # Select a drive letter to mount vhd file
 
-isodriveletter = "I" # Select a drive letter to mount iso file
+isodriveletter = "" # Select a drive letter to mount iso file
 
-'''
+# Prompt for informations
+arch = input("Enter your arch (x86, amd64, arm64): ")
+print(rings)
+ring = input("Enter your ring: ")
+lang = input("Choose a language ('en-us' for example): ")
+edition = input("Choose your edition (core, coren, professional, professionaln): ")
+vhd = input("Enter your vhd path (please replace '\\' with '\\\\'): ")
+driveletter = input("Choose a driveletter to mount vhd file (for example 'V'). You should use the same letter at all time: ")
+isodriveletter = input("Choose a driveletter to mount iso (anything you want but not the existed letter): ")
+
 # Get the version id
 if ring == "wif":
 	# Get the file id
@@ -72,7 +76,7 @@ os.system("timeout /t 1 >nul")
 os.system("scripts\\files\\wimlib-imagex apply " + isodriveletter + ":\\sources\\install.wim " + driveletter + ":\\") # This might take a while too!
 
 '''
-You must set the boot flag for the vhd file
+You have to set the boot flag for the vhd file
 Please open Command Prompt as Admin and execute:
 bcdboot V:\Windows
 Replace V with the mounted vhd letter
