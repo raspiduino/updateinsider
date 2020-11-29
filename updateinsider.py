@@ -78,11 +78,8 @@ while exitcode != 0:
 # Change the file id
 open("scripts\\tmp\\uup_download_windows.tmp.cmd", "w").write(open("scripts\\uup_download_windows.cmd", "r").read().replace("id=", "id=" + fileid))
 
-# We have to create a new while check here
-exitcode = -1
-while exitcode != 0:
-	# Run the uupdump script
-	exitcode = os.system("scripts\\tmp\\uup_download_windows.tmp.cmd") # This might take a while. Go and have a cup of coffee :D
+# Run the uupdump script
+os.system("scripts\\tmp\\uup_download_windows.tmp.cmd") # This might take a while. Go and have a cup of coffee :D
 
 # Edit the mountvhd script
 open("scripts\\tmp\\mountvhd.tmp.txt", "w").write(open("scripts\\mountvhd.txt", "r").read().replace("file=", "file=" + vhd).replace("letter=", "letter=" + driveletter))
