@@ -5,7 +5,7 @@ UpdateInsider is an easier way to update your 'native boot' Windows (Insider) in
 <br>So with this script, you can update your Windows easily without that error and without putting the vhd into a vm! 
 <br>The installation process takes around <b>2hr and 15min</b> (tested on Windows 10 with Pentium Dual-Core T4300, 2GB ram, SSD) and your process maybe quicker depends on your machine.
 <br>Support for both x86, amd64 and arm64 (aarch64)
-<br><b>Tip:</b> You can use this to quickly test <i>Windows for Arm</i> on QEMU without install it (really long time!)
+<br><b>Tip:</b> You can use this to quickly test <i>Windows for Arm</i> on QEMU without install it (which takes really long time!). See notes below.
 
 ## How this works?
 The Python script will find the lastest update available using uupdump.ml, then download the packages and convert them into iso by uupdump tools. The iso will be mounted and extract to vhd/vhdx file. Reboot and you will have a new installation!
@@ -37,9 +37,12 @@ python.exe updateinsider.py
 |<i>rings</i>|The rings you want to download (it can be <b>retail</b> (Normal release, auto choose the lastest version), <b>rp</b>) (Release preview), <b>wis</b> (Slow ring) or <b>wif</b> (Fast ring))|
 |<i>lang</i>|Pick a language (get a list of language from uupdump.ml). Example: <b><i>en-us</i></b> should be a great start!|
 |<i>edition</i>|Pick <b><i>1</i></b> edition (it can be <b>core</b>, <b>coren</b>, <b>professional</b>, <b>professionaln</b>). For arm64 it can <b><i>only</i></b> be <b>core</b> and <b>professional</b>!|
-|<i>vhd</i>|Enter your vhd/vhdx file path. <b><i>Remember</i></b> to replace "\" by "\\"!|
+|<i>vhd</i>|Enter your vhd/vhdx file path. <b><i>Remember</i></b> to replace "\" by "\\" and not include the "" in the path!|
 |<i>driveletter</i>|Choose a drive letter to mount your vhd/vhdx file. It should be only one letter for all the time you run this script. Example: 'V'|
 |<i>isodriveletter</i>|Choose a drive letter to mount iso file. It doesn't matter, so pick up one randomly!|
+
+### Note
+If you want to use this to quickly test Windows 10 for ARM64 on QEMU, please don't use bcdboot with the vhd file. Please follow the <a href="https://winaero.com/install-windows-10-arm-qemu/">instructions</a> to boot that vhd in QEMU.
 
 ## Warnings
 - When you run this scripts, it will format your vhd, so if you need to keep your files stored in that vhd, saved it to another drive. (We are working to do this automaticly)

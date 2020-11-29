@@ -58,27 +58,51 @@ else:
     	version.append(table[i].select("i")[0].text[14:])
     fileid = table[version.index(max(version)) + 1].select("a")[0]["href"][20:]
 
-# Copy required files
-os.system("mkdir scripts\\tmp\\files")
-os.system("copy scripts\\files\\*.* scripts\\tmp\\files\\")
-os.system("copy scripts\\ConvertConfig.ini scripts\\tmp\\ConvertConfig.ini")
+'''
+New feature added on 29/11/2020
+Auto try again if the exitcode not 0 (error occurred)
+Reason? If you has an error (when running os.system),
+it won't catch and stop. The script will continue to 
+run and delete the create file and you have to start again!
+'''
+
+exitcode = -1
+while exitcode != 0:
+	exitcode = 0
+	
+	# Copy required files
+	exitcode += os.system("mkdir scripts\\tmp\\files")
+	exitcode += os.system("copy scripts\\files\\*.* scripts\\tmp\\files\\")
+	exitcode += os.system("copy scripts\\ConvertConfig.ini scripts\\tmp\\ConvertConfig.ini")
 
 # Change the file id
 open("scripts\\tmp\\uup_download_windows.tmp.cmd", "w").write(open("scripts\\uup_download_windows.cmd", "r").read().replace("id=", "id=" + fileid))
 
-# Run the uupdump script
-os.system("scripts\\tmp\\uup_download_windows.tmp.cmd") # This might take a while. Go and have a cup of coffee :D
+# We have to create a new while check here
+exitcode = -1
+while exitcode != 0:
+	# Run the uupdump script
+	exitcode = os.system("scripts\\tmp\\uup_download_windows.tmp.cmd") # This might take a while. Go and have a cup of coffee :D
 
-# Mount vhd file and format it
+# Edit the mountvhd script
 open("scripts\\tmp\\mountvhd.tmp.txt", "w").write(open("scripts\\mountvhd.txt", "r").read().replace("file=", "file=" + vhd).replace("letter=", "letter=" + driveletter))
-os.system('diskpart /s scripts\\tmp\\mountvhd.tmp.txt')
 
-# Mount iso
-os.system("start scripts\\PortableWinCDEmu-4.0.exe scripts\\tmp\\" + [f for f in os.listdir('scripts\\tmp\\') if f.endswith('.ISO')][0] + " " + isodriveletter)
+exitcode = -1
+while exitcode != 0:
+	exitcode = 0
+	
+	# Mount vhd file and format it
+	exitcode += os.system('diskpart /s scripts\\tmp\\mountvhd.tmp.txt')
+
+	# Mount iso
+	exitcode += os.system("start scripts\\PortableWinCDEmu-4.0.exe scripts\\tmp\\" + [f for f in os.listdir('scripts\\tmp\\') if f.endswith('.ISO')][0] + " " + isodriveletter)
+
 os.system("timeout /t 1 >nul")
 
-# Extract the wim file
-os.system("scripts\\files\\wimlib-imagex apply " + isodriveletter + ":\\sources\\install.wim " + driveletter + ":\\") # This might take a while too!
+exitcode = -1
+while exitcode != 0:
+	# Extract the wim file
+	exitcode = os.system("scripts\\files\\wimlib-imagex apply " + isodriveletter + ":\\sources\\install.wim " + driveletter + ":\\") # This might take a while too!
 
 '''
 You have to set the boot flag for the vhd file
