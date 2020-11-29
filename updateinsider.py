@@ -37,12 +37,13 @@ driveletter = "" # Select a drive letter to mount vhd file
 isodriveletter = "" # Select a drive letter to mount iso file
 
 # Prompt for informations
+print("Welcome to Updateinsider! Please read readme.md in the repo carefully before using this script!")
 arch = input("Enter your arch (x86, amd64, arm64): ")
 print(rings)
 ring = input("Enter your ring: ")
 lang = input("Choose a language ('en-us' for example): ")
 edition = input("Choose your edition (core, coren, professional, professionaln): ")
-vhd = input("Enter your vhd path (please replace '\\' with '\\\\'): ")
+vhd = input('Enter your vhd path (please remove the quotation marks ("")): ')
 driveletter = input("Choose a driveletter to mount vhd file (for example 'V'). You should use the same letter at all time: ")
 isodriveletter = input("Choose a driveletter to mount iso (anything you want but not the existed letter): ")
 
@@ -81,6 +82,7 @@ open("scripts\\tmp\\uup_download_windows.tmp.cmd", "w").write(open("scripts\\uup
 # Run the uupdump script
 os.system("scripts\\tmp\\uup_download_windows.tmp.cmd") # This might take a while. Go and have a cup of coffee :D
 
+
 # Edit the mountvhd script
 open("scripts\\tmp\\mountvhd.tmp.txt", "w").write(open("scripts\\mountvhd.txt", "r").read().replace("file=", "file=" + vhd).replace("letter=", "letter=" + driveletter))
 
@@ -92,6 +94,7 @@ while exitcode != 0:
 	exitcode += os.system('diskpart /s scripts\\tmp\\mountvhd.tmp.txt')
 
 	# Mount iso
+	exitcode += os.system("start scripts\\PortableWinCDEmu-4.0.exe /install") # Install the driver for CDEmu
 	exitcode += os.system("start scripts\\PortableWinCDEmu-4.0.exe scripts\\tmp\\" + [f for f in os.listdir('scripts\\tmp\\') if f.endswith('.ISO')][0] + " " + isodriveletter)
 
 os.system("timeout /t 1 >nul")
@@ -102,7 +105,7 @@ while exitcode != 0:
 	exitcode = os.system("scripts\\files\\wimlib-imagex apply " + isodriveletter + ":\\sources\\install.wim " + driveletter + ":\\") # This might take a while too!
 
 '''
-You have to set the boot flag for the vhd file
+You have to set the boot flag for the vhd file (NOT for ARM64 if you are not on a ARM machine!!!)
 Please open Command Prompt as Admin and execute:
 bcdboot V:\Windows
 Replace V with the mounted vhd letter
