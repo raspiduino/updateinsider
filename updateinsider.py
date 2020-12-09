@@ -93,16 +93,12 @@ while exitcode != 0:
 	# Mount vhd file and format it
 	exitcode += os.system('diskpart /s scripts\\tmp\\mountvhd.tmp.txt')
 
-	# Mount iso
-	exitcode += os.system("start scripts\\PortableWinCDEmu-4.0.exe /install") # Install the driver for CDEmu
-	exitcode += os.system("start scripts\\PortableWinCDEmu-4.0.exe scripts\\tmp\\" + [f for f in os.listdir('scripts\\tmp\\') if f.endswith('.ISO')][0] + " " + isodriveletter)
-
 os.system("timeout /t 1 >nul")
 
 exitcode = -1
 while exitcode != 0:
 	# Extract the wim file
-	exitcode = os.system("scripts\\files\\wimlib-imagex apply " + isodriveletter + ":\\sources\\install.wim " + driveletter + ":\\") # This might take a while too!
+	exitcode = os.system("scripts\\files\\wimlib-imagex apply scripts\\tmp\\ISOFOLDER\\sources\\install.wim " + driveletter + ":\\") # This might take a while too!
 
 '''
 You have to set the boot flag for the vhd file (NOT for ARM64 if you are not on a ARM machine!!!)
