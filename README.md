@@ -56,7 +56,6 @@ dism /Unmount-image /MountDir:MountUUP /Discard
 Special thanks to:
 - <a href="https://github.com/whatever127">whatever127</a> and other <i>uupdump</i> contributors (<a href="https://uupdump.ml">uupdump.ml</a>)
 - Leonard Richardson and other BeautifulSoup contributors (<a href="https://pypi.org/project/beautifulsoup4/">BeautifulSoup4</a>)
-- <a href="https://sysprogs.com">sysprogs.com</a> (WinCDEmu)
 - And other libs...
 
 ## License
