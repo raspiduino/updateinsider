@@ -48,20 +48,14 @@ SETLOCAL DISABLEDELAYEDEXPANSION
 goto :EOF
 
 :START_PROCESS
-set "aria2=files\aria2c.exe"
-set "a7z=files\7zr.exe"
-set "uupConv=files\uup-converter-wimlib.7z"
+set "aria2=aria2c.exe"
+set "a7z=bin\7z.exe"
 set "aria2Script=files\aria2_script.%random%.txt"
 set "destDir=UUPs"
 
 if NOT EXIST %aria2% goto :NO_ARIA2_ERROR
 if NOT EXIST %a7z% goto :NO_FILE_ERROR
-if NOT EXIST %uupConv% goto :NO_FILE_ERROR
 if NOT EXIST ConvertConfig.ini goto :NO_FILE_ERROR
-
-echo Extracting UUP converter...
-"%a7z%" -x!ConvertConfig.ini -y x "%uupConv%" >NUL
-echo.
 
 echo Retrieving aria2 script...
 "%aria2%" --no-conf --log-level=info --log="aria2_download.log" -o"%aria2Script%" --allow-overwrite=true --auto-file-renaming=false "https://uupdump.ml/get.php?id=&pack=en-us&edition=professional&aria2=2"

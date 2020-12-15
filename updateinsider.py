@@ -4,7 +4,7 @@ Useful for update native boot vhd/vhdx
 By @raspiduino on github
 Date created 19/11/2020
 '''
-# Many thanks whatever127 (uupdump.ml), Leonard Richardson (beautifulsoup), sysprogs.com (WinCDEmu), and other libs.
+# Many thanks whatever127 (uupdump.ml), Leonard Richardson (beautifulsoup) and other libs.
 
 import requests
 from bs4 import BeautifulSoup
@@ -34,7 +34,6 @@ vhd = "" # Set the vhd file
 
 driveletter = "" # Select a drive letter to mount vhd file
 
-isodriveletter = "" # Select a drive letter to mount iso file
 
 # Prompt for informations
 print("Welcome to Updateinsider! Please read readme.md in the repo carefully before using this script!")
@@ -45,7 +44,6 @@ lang = input("Choose a language ('en-us' for example): ")
 edition = input("Choose your edition (core, coren, professional, professionaln): ")
 vhd = input('Enter your vhd path (please remove the quotation marks ("")): ')
 driveletter = input("Choose a driveletter to mount vhd file (for example 'V'). You should use the same letter at all time: ")
-isodriveletter = input("Choose a driveletter to mount iso (anything you want but not the existed letter): ")
 
 # Get the version id
 if ring == "wif":
@@ -72,16 +70,14 @@ while exitcode != 0:
 	exitcode = 0
 	
 	# Copy required files
-	exitcode += os.system("mkdir scripts\\tmp\\files")
-	exitcode += os.system("copy scripts\\files\\*.* scripts\\tmp\\files\\")
-	exitcode += os.system("copy scripts\\ConvertConfig.ini scripts\\tmp\\ConvertConfig.ini")
+	exitcode += os.system("mkdir scripts\\tmp")
+	exitcode += os.system("xcopy /E scripts\\files scripts\\tmp")
 
 # Change the file id
 open("scripts\\tmp\\uup_download_windows.tmp.cmd", "w").write(open("scripts\\uup_download_windows.cmd", "r").read().replace("id=", "id=" + fileid))
 
 # Run the uupdump script
-os.system("scripts\\tmp\\uup_download_windows.tmp.cmd") # This might take a while. Go and have a cup of coffee :D
-
+exitcode = os.system("scripts\\tmp\\uup_download_windows.tmp.cmd") # This might take a while. Go and have a cup of coffee :D
 
 # Edit the mountvhd script
 open("scripts\\tmp\\mountvhd.tmp.txt", "w").write(open("scripts\\mountvhd.txt", "r").read().replace("file=", "file=" + vhd).replace("letter=", "letter=" + driveletter))
@@ -98,7 +94,7 @@ os.system("timeout /t 1 >nul")
 exitcode = -1
 while exitcode != 0:
 	# Extract the wim file
-	exitcode = os.system("scripts\\files\\wimlib-imagex apply scripts\\tmp\\ISOFOLDER\\sources\\install.wim " + driveletter + ":\\") # This might take a while too!
+	exitcode = os.system("scripts\\wimlib-imagex apply scripts\\tmp\\ISOFOLDER\\sources\\install.wim " + driveletter + ":\\") # This might take a while too!
 
 '''
 You have to set the boot flag for the vhd file (NOT for ARM64 if you are not on a ARM machine!!!)
