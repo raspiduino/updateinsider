@@ -30,7 +30,7 @@ lang = "" # Pick a language
 
 edition = "" # Choose an edition (core, coren, professional, professionaln)
 
-vhd = "" # Set the vhd file
+vhd = "" # Set the vhd file. Must replace \ with \\
 
 driveletter = "" # Select a drive letter to mount vhd file
 
@@ -42,7 +42,7 @@ print(rings)
 ring = input("Enter your ring: ")
 lang = input("Choose a language ('en-us' for example): ")
 edition = input("Choose your edition (core, coren, professional, professionaln): ")
-vhd = input('Enter your vhd path (please remove the quotation marks ("")): ')
+vhd = input('Enter your vhd path (please remove the quotation marks ("") and replace \\ with \\\\): ')
 driveletter = input("Choose a driveletter to mount vhd file (for example 'V'). You should use the same letter at all time: ")
 
 # Get the version id
@@ -80,14 +80,10 @@ open("scripts\\tmp\\uup_download_windows.tmp.cmd", "w").write(open("scripts\\uup
 exitcode = os.system("scripts\\tmp\\uup_download_windows.tmp.cmd") # This might take a while. Go and have a cup of coffee :D
 
 # Edit the mountvhd script
-open("scripts\\tmp\\mountvhd.tmp.txt", "w").write(open("scripts\\mountvhd.txt", "r").read().replace("file=", "file=" + vhd).replace("letter=", "letter=" + driveletter))
+open("scripts\\tmp\\mountvhd.tmp.txt", "w").write(open("scripts\\mountvhd.txt", "r").read().replace("file=", 'file="' + vhd + '"').replace("letter=", "letter=" + driveletter))
 
-exitcode = -1
-while exitcode != 0:
-	exitcode = 0
-	
-	# Mount vhd file and format it
-	exitcode += os.system('diskpart /s scripts\\tmp\\mountvhd.tmp.txt')
+# Mount vhd and format it
+os.system('diskpart /s scripts\\tmp\\mountvhd.tmp.txt')
 
 os.system("timeout /t 1 >nul")
 

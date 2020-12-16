@@ -37,7 +37,7 @@ python.exe updateinsider.py
 |<i>rings</i>|The rings you want to download (it can be <b>retail</b> (Normal release, auto choose the lastest version), <b>rp</b>) (Release preview), <b>wis</b> (Slow ring) or <b>wif</b> (Fast ring))|
 |<i>lang</i>|Pick a language (get a list of language from uupdump.ml). Example: <b><i>en-us</i></b> should be a great start!|
 |<i>edition</i>|Pick <b><i>1</i></b> edition (it can be <b>core</b>, <b>coren</b>, <b>professional</b>, <b>professionaln</b>). For arm64 it can <b><i>only</i></b> be <b>core</b> and <b>professional</b>!|
-|<i>vhd</i>|Enter your vhd/vhdx file path. <b><i>Remember</i></b> not to include the quotation marks ("") in the path!|
+|<i>vhd</i>|Enter your vhd/vhdx file path. <b><i>Remember</i></b> not to include the quotation marks ("") in the path. You must also replace '\' with '\\'!|
 |<i>driveletter</i>|Choose a drive letter to mount your vhd/vhdx file. It should be only one letter for all the time you run this script. Example: 'V'|
 |<i>isodriveletter</i>|Choose a drive letter to mount iso file. It doesn't matter, so pick up one randomly!|
 

@@ -534,15 +534,15 @@ if %SkipISO% neq 0 (
   goto :QUIT
 )
 echo.
-echo %line%
-echo Creating ISO . . .
-echo %line%
-if /i not %arch%==arm64 (
-cdimage.exe -bootdata:2#p0,e,b"ISOFOLDER\boot\etfsboot.com"#pEF,e,b"ISOFOLDER\efi\Microsoft\boot\efisys.bin" -o -m -u2 -udfver102 -t%isotime% -l%DVDLABEL% ISOFOLDER %DVDISO%.ISO
-) else (
-cdimage.exe -bootdata:1#pEF,e,b"ISOFOLDER\efi\Microsoft\boot\efisys.bin" -o -m -u2 -udfver102 -t%isotime% -l%DVDLABEL% ISOFOLDER %DVDISO%.ISO
-)
-set ERRORTEMP=%ERRORLEVEL%
+::echo %line%
+::echo Creating ISO . . .
+::echo %line%
+::if /i not %arch%==arm64 (
+::cdimage.exe -bootdata:2#p0,e,b"ISOFOLDER\boot\etfsboot.com"#pEF,e,b"ISOFOLDER\efi\Microsoft\boot\efisys.bin" -o -m -u2 -udfver102 -t%isotime% -l%DVDLABEL% ISOFOLDER %DVDISO%.ISO
+::) else (
+::cdimage.exe -bootdata:1#pEF,e,b"ISOFOLDER\efi\Microsoft\boot\efisys.bin" -o -m -u2 -udfver102 -t%isotime% -l%DVDLABEL% ISOFOLDER %DVDISO%.ISO
+::)
+set ERRORTEMP=0
 if %ERRORTEMP% neq 0 goto :E_ISO
 if %RefESD% neq 0 call :uups_backup&echo Finished
 echo.
