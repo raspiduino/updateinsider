@@ -57,10 +57,9 @@ if NOT EXIST %aria2% goto :NO_ARIA2_ERROR
 if NOT EXIST %a7z% goto :NO_FILE_ERROR
 if NOT EXIST ConvertConfig.ini goto :NO_FILE_ERROR
 
-echo Retrieving aria2 script...
-"%aria2%" --no-conf --log-level=info --log="aria2_download.log" -o"%aria2Script%" --allow-overwrite=true --auto-file-renaming=false "https://uupdump.ml/get.php?id=&pack=en-us&edition=professional&aria2=2"
-if %ERRORLEVEL% GTR 0 call :DOWNLOAD_ERROR & exit /b 1
-echo.
+goto DOWNLOAD_SCRIPTS
+
+:CHECK_ERROR
 
 for /F "tokens=2 delims=:" %%i in ('findstr #UUPDUMP_ERROR: "%aria2Script%"') do set DETECTED_ERROR=%%i
 if NOT [%DETECTED_ERROR%] == [] (
@@ -71,9 +70,7 @@ if NOT [%DETECTED_ERROR%] == [] (
     goto :EOF
 )
 
-echo Attempting to download files...
-"%aria2%" --no-conf --log-level=info --log="aria2_download.log" -x16 -s16 -j5 -c -R -d"%destDir%" -i"%aria2Script%"
-if %ERRORLEVEL% GTR 0 call :DOWNLOAD_ERROR & exit /b 1
+goto DOWNLOAD_UUPS
 
 if EXIST convert-UUP.cmd goto :START_CONVERT
 pause
@@ -97,10 +94,17 @@ echo We couldn't find one of needed files for this script.
 pause
 goto :EOF
 
-:DOWNLOAD_ERROR
-echo.
-echo We have encountered an error while downloading files.
-pause
-goto :EOF
+:DOWNLOAD_UUPS
+echo Attempting to download files...
+"%aria2%" --no-conf --log-level=info --log="aria2_download.log" -x16 -s16 -j5 -c -R -d"%destDir%" -i"%aria2Script%"
+:: If errorlevel != 0 restart the download progress
+if %errorlevel% NEQ 0 goto DOWNLOAD_UUPS
+goto START_CONVERT
+
+:DOWNLOAD_SCRIPTS
+echo Retrieving aria2 script...
+"%aria2%" --no-conf --log-level=info --log="aria2_download.log" -o"%aria2Script%" --allow-overwrite=true --auto-file-renaming=false "https://uupdump.ml/get.php?id=&pack=en-us&edition=professional&aria2=2"
+if %errorlevel% NEQ 0 goto DOWNLOAD_SCRIPTS
+goto CHECK_ERROR
 
 :EOF
