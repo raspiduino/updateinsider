@@ -108,7 +108,6 @@ Restart and take a look at your new Insider version! :D
 
 # Clear temp file
 os.system("rmdir /S /Q scripts\\tmp") # Comment out this line if you want to keep downloaded files
-os.system("mkdir scripts\\tmp")
 
 print("It's all done!")
 print("You have installed Windows 10 " + edition + " " + lang + " (" + ring +" ring) on " + driveletter + ":\\")
