@@ -461,36 +461,36 @@ if %StartVirtual% neq 0 echo StartVirtual
 )
 if %_build% geq 18362 if %AddUpdates% equ 1 if %SkipEdge% neq 0 echo SkipEdge
 call :uups_ref
-::echo.
-::echo %line%
-::echo Creating Setup Media Layout . . .
-::echo %line%
-::echo.
+echo.
+echo %line%
+echo Creating Setup Media Layout . . .
+echo %line%
+echo.
 if exist ISOFOLDER\ rmdir /s /q ISOFOLDER\
 mkdir ISOFOLDER
-::wimlib-imagex.exe apply "!MetadataESD!" 1 ISOFOLDER\ --no-acls --no-attributes %_Null%
-::set ERRORTEMP=%ERRORLEVEL%
-::if %ERRORTEMP% neq 0 goto :E_Apply
-::if exist ISOFOLDER\MediaMeta.xml del /f /q ISOFOLDER\MediaMeta.xml %_Nul3%
-::rem rmdir /s /q ISOFOLDER\sources\uup\ %_Nul3%
-::if %_build% geq 18890 (
-::wimlib-imagex.exe extract "!MetadataESD!" 3 Windows\Boot\Fonts\* --dest-dir=ISOFOLDER\boot\fonts --no-acls --no-attributes %_Nul3%
-::xcopy /CRY ISOFOLDER\boot\fonts\* ISOFOLDER\efi\microsoft\boot\fonts\ %_Nul3%
-::)
-::if exist ISOFOLDER\sources\ei.cfg (
-::if %AIO% equ 1 del /f /q ISOFOLDER\sources\ei.cfg %_Nul3%
-::if %_count% gtr 1 del /f /q ISOFOLDER\sources\ei.cfg %_Nul3%
-::)
-::for /f "tokens=5-10 delims=: " %%G in ('wimlib-imagex.exe info "!MetadataESD!" 3 ^| find /i "Last Modification Time"') do (set mmm=%%G&set "isotime=%%H/%%L,%%I:%%J:%%K")
-::call :setdate %mmm%
-::set _file=ISOFOLDER\sources\%WIMFILE%
-::set _rtrn=RetISO
-::goto :InstallWim
-:::RetISO
-::if %_Debug% neq 0 if %WIMFILE%==install.esd set SkipWinRE=1
-::set _rtrn=BakISO
-::goto :WinreWim
-:::BakISO
+wimlib-imagex.exe apply "!MetadataESD!" 1 ISOFOLDER\ --no-acls --no-attributes %_Null%
+set ERRORTEMP=%ERRORLEVEL%
+if %ERRORTEMP% neq 0 goto :E_Apply
+if exist ISOFOLDER\MediaMeta.xml del /f /q ISOFOLDER\MediaMeta.xml %_Nul3%
+rem rmdir /s /q ISOFOLDER\sources\uup\ %_Nul3%
+if %_build% geq 18890 (
+wimlib-imagex.exe extract "!MetadataESD!" 3 Windows\Boot\Fonts\* --dest-dir=ISOFOLDER\boot\fonts --no-acls --no-attributes %_Nul3%
+xcopy /CRY ISOFOLDER\boot\fonts\* ISOFOLDER\efi\microsoft\boot\fonts\ %_Nul3%
+)
+if exist ISOFOLDER\sources\ei.cfg (
+if %AIO% equ 1 del /f /q ISOFOLDER\sources\ei.cfg %_Nul3%
+if %_count% gtr 1 del /f /q ISOFOLDER\sources\ei.cfg %_Nul3%
+)
+for /f "tokens=5-10 delims=: " %%G in ('wimlib-imagex.exe info "!MetadataESD!" 3 ^| find /i "Last Modification Time"') do (set mmm=%%G&set "isotime=%%H/%%L,%%I:%%J:%%K")
+call :setdate %mmm%
+set _file=ISOFOLDER\sources\%WIMFILE%
+set _rtrn=RetISO
+goto :InstallWim
+:RetISO
+if %_Debug% neq 0 if %WIMFILE%==install.esd set SkipWinRE=1
+set _rtrn=BakISO
+goto :WinreWim
+:BakISO
 ::echo.
 ::echo %line%
 ::echo Creating boot.wim . . .
