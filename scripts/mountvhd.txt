@@ -8,6 +8,6 @@ attach vdisk
 clean
 create partition primary
 active
-format FS=NTFS label="Windows 10 Insider" quick
+format FS=NTFS label="Windows 11 Insider" quick
 REM You can change the letter here if you want
 assign letter=
