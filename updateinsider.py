@@ -37,7 +37,7 @@ driveletter = "" # Select a drive letter to mount vhd file
 
 # Prompt for informations
 print("Welcome to Updateinsider! Please read readme.md in the repo carefully before using this script!")
-arch = input("Enter your arch (x86, amd64, arm64): ")
+arch = input("Enter your arch (amd64, arm64): ")
 print(rings)
 ring = input("Enter your ring: ")
 lang = input("Choose a language ('en-us' for example): ")
@@ -110,6 +110,6 @@ Restart and take a look at your new Insider version! :D
 os.system("rmdir /S /Q scripts\\tmp") # Comment out this line if you want to keep downloaded files
 
 print("It's all done!")
-print("You have installed Windows 10 " + edition + " " + lang + " (" + ring +" ring) on " + driveletter + ":\\")
+print("You have installed Windows 11 " + edition + " " + lang + " (" + ring +" ring) on " + driveletter + ":\\")
 print("Reboot and see your new version!")
 os.system("pause")
