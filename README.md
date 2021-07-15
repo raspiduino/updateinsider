@@ -33,7 +33,7 @@ python.exe updateinsider.py
 <br>After starting the script, it will ask for the following info:
 |Setting|Description|
 |-------|-----------|
-|<i>arch</i>|The architecture you want to download and install to the VHD (it can be <b>x86</b>, <b>amd64</b> or <b>arm64</b> (aarch64))|
+|<i>arch</i>|The architecture you want to download and install to the VHD (it can be <b>amd64</b> or <b>arm64</b> (aarch64))|
 |<i>rings</i>|The rings you want to download (it can be <b>retail</b> (Normal release, auto choose the lastest version), <b>rp</b>) (Release preview), <b>wis</b> (Slow ring) or <b>wif</b> (Fast ring))|
 |<i>lang</i>|Pick a language (get a list of language from uupdump.ml). Example: <b><i>en-us</i></b> should be a great start!|
 |<i>edition</i>|Pick <b><i>1</i></b> edition (it can be <b>core</b>, <b>coren</b>, <b>professional</b>, <b>professionaln</b>). For arm64 it can <b><i>only</i></b> be <b>core</b> and <b>professional</b>!|
@@ -60,7 +60,7 @@ Special thanks to:
 - And other libs...
 
 ## License
-Under <a href="https://github.com/raspiduino/updateinsider/blob/master/LICENSE">GPL-v3</a>
+Under <a href="https://github.com/raspiduino/updateinsider/blob/master/LICENSE">MIT license</a>
 
 ## Todo
 Auto backup files before installing to vhd/vhdx, then restore it after installed.
