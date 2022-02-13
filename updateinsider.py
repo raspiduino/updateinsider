@@ -4,7 +4,7 @@ Useful for update native boot vhd/vhdx
 By @raspiduino on github
 Date created 19/11/2020
 '''
-# Many thanks whatever127 (uupdump.ml), Leonard Richardson (beautifulsoup) and other libs.
+# Many thanks whatever127 (uupdump.net), Leonard Richardson (beautifulsoup) and other libs.
 
 import requests
 from bs4 import BeautifulSoup
@@ -48,10 +48,10 @@ driveletter = input("Choose a driveletter to mount vhd file (for example 'V'). Y
 # Get the version id
 if ring == "wif":
 	# Get the file id
-	fileid = BeautifulSoup(requests.get("https://uupdump.ml/fetchupd.php?arch=" + arch + "&ring=wif&build=latest").content, 'html.parser').select("td")[0].select("a")[0]['href'][20:]
+	fileid = BeautifulSoup(requests.get("https://uupdump.net/fetchupd.php?arch=" + arch + "&ring=wif&build=latest").content, 'html.parser').select("td")[0].select("a")[0]['href'][20:]
     
 else:
-    table = BeautifulSoup(requests.get("https://uupdump.ml/" + BeautifulSoup(requests.get("https://uupdump.ml/").content, 'html.parser').select("tr")[1 if ring == "retail" else 2 if ring == "rp" else 3].select("a")[0 if arch == "amd64" else 1 if arch == "x86" else 2]["href"]).content, 'html.parser').select("tr")
+    table = BeautifulSoup(requests.get("https://uupdump.net/" + BeautifulSoup(requests.get("https://uupdump.net/").content, 'html.parser').select("tr")[1 if ring == "retail" else 2 if ring == "rp" else 3].select("a")[0 if arch == "amd64" else 1 if arch == "x86" else 2]["href"]).content, 'html.parser').select("tr")
     version = []
     for i in range(1, len(table)):
     	version.append(table[i].select("i")[0].text[14:])
