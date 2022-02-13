@@ -7,8 +7,11 @@ UpdateInsider is an easier way to update your 'native boot' Windows (Insider) in
 <br>Support for both amd64 and arm64 (aarch64)
 <br><b>Tip:</b> You can use this to quickly test <i>Windows for Arm</i> on QEMU without install it (which takes really long time!). See notes below.
 
+## Updates
+- 13/2/2022: The author has changed the domain from `uupdump.ml` to `uupdump.net`
+
 ## How this works?
-The Python script will find the lastest update available using uupdump.ml, then download the packages and convert them into iso by uupdump tools. The iso will be mounted and extract to vhd/vhdx file. Reboot and you will have a new installation!
+The Python script will find the lastest update available using uupdump.net, then download the packages and convert them into iso by uupdump tools. The iso will be mounted and extract to vhd/vhdx file. Reboot and you will have a new installation!
 
 ## Requirement
 - Python 3.7 (require bs4 and requests). You can use the portable version from <a href="https://github.com/raspiduino/updateinsider/releases">Release</a>
@@ -35,7 +38,7 @@ python.exe updateinsider.py
 |-------|-----------|
 |<i>arch</i>|The architecture you want to download and install to the VHD (it can be <b>amd64</b> or <b>arm64</b> (aarch64))|
 |<i>rings</i>|The rings you want to download (it can be <b>retail</b> (Normal release, auto choose the lastest version), <b>rp</b>) (Release preview), <b>wis</b> (Slow ring) or <b>wif</b> (Fast ring))|
-|<i>lang</i>|Pick a language (get a list of language from uupdump.ml). Example: <b><i>en-us</i></b> should be a great start!|
+|<i>lang</i>|Pick a language (get a list of language from uupdump.net). Example: <b><i>en-us</i></b> should be a great start!|
 |<i>edition</i>|Pick <b><i>1</i></b> edition (it can be <b>core</b>, <b>coren</b>, <b>professional</b>, <b>professionaln</b>). For arm64 it can <b><i>only</i></b> be <b>core</b> and <b>professional</b>!|
 |<i>vhd</i>|Enter your vhd/vhdx file path. <b><i>Remember</i></b> not to include the quotation marks ("") in the path. You must also replace '\' with '\\'!|
 |<i>driveletter</i>|Choose a drive letter to mount your vhd/vhdx file. It should be only one letter for all the time you run this script. Example: 'V'|
@@ -54,7 +57,7 @@ dism /Unmount-image /MountDir:MountUUP /Discard
 
 ## Credits
 Special thanks to:
-- <a href="https://github.com/whatever127">whatever127</a> and other <i>uupdump</i> contributors (<a href="https://uupdump.ml">uupdump.ml</a>)
+- <a href="https://github.com/whatever127">whatever127</a> and other <i>uupdump</i> contributors (<a href="https://uupdump.net">uupdump.net</a>)
 - <a href="https://github.com/abbodi1406">abbodi1406</a> and other <i>uup-converter-wimlib</i> contributors (<a href="https://github.com/abbodi1406/BatUtil/tree/master/uup-converter-wimlib">uup-converter-wimlib</a>)
 - Leonard Richardson and other BeautifulSoup contributors (<a href="https://pypi.org/project/beautifulsoup4/">BeautifulSoup4</a>)
 - And other libs...
