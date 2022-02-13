@@ -103,7 +103,7 @@ goto START_CONVERT
 
 :DOWNLOAD_SCRIPTS
 echo Retrieving aria2 script...
-"%aria2%" --no-conf --log-level=info --log="aria2_download.log" -o"%aria2Script%" --allow-overwrite=true --auto-file-renaming=false "https://uupdump.ml/get.php?id=&pack=en-us&edition=professional&aria2=2"
+"%aria2%" --no-conf --log-level=info --log="aria2_download.log" -o"%aria2Script%" --allow-overwrite=true --auto-file-renaming=false "https://uupdump.net/get.php?id=&pack=en-us&edition=professional&aria2=2"
 if %errorlevel% NEQ 0 goto DOWNLOAD_SCRIPTS
 goto CHECK_ERROR
 
